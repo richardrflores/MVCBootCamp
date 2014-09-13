@@ -1,0 +1,46 @@
+﻿@model MVCBootCamp.Models.ViewModels.DefaultViewModel
+
+<style type="text/css">
+    .target {
+        height: 291px;
+    }
+
+    .center-container {
+        text-align: center;
+    }
+</style>
+
+@{
+    ViewBag.Title = "BRM";
+}
+
+<h2>Basic Rifle Marksmanship Qualification</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="target center-container">
+        <img src="@Url.Content("~/Content/Images/target.png")" />
+    </div>
+    <div class="center-container">
+        @Html.RadioButtonFor(model => model.Target.Selected, false, new { id = "targetSelector" })
+        @Html.HiddenFor(model => model.Target.Code, Model.Target.Code)
+        @Html.LabelFor(model => model.Target.Description, Model.Target.Description)
+        @Html.HiddenFor(model => model.Target.Description, Model.Target.Description)
+    </div>
+    <button class="btn btn-danger">Fire!</button>
+    @Html.LabelFor(model => model.FeedBack.Message, Model.FeedBack.Message, new { id = "feedback" })
+
+}
+<script>
+    $(function () {
+        $("#feedback").delay(1000).fadeOut("slow");
+
+        $("button").on("click", function () {
+            var isTargetSelected = $("#targetSelector").is(":checked");
+            if (isTargetSelected) {
+                $("img").hide();
+            }
+            $("form").submit();
+        });
+    });
+</script>
